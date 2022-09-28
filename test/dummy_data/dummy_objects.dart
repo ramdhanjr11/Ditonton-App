@@ -1,4 +1,5 @@
 import 'package:ditonton/data/models/movie_table.dart';
+import 'package:ditonton/data/models/tv_model.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
@@ -81,3 +82,35 @@ final testMovieMap = {
   'posterPath': 'posterPath',
   'title': 'title',
 };
+
+final testTvMap = {
+  "backdrop_path": "/path.jpg",
+  "genre_ids": [1, 2, 3, 4],
+  "id": 1,
+  "original_title": "Original Title",
+  "overview": "Overview",
+  "popularity": 1.0,
+  "poster_path": "/path.jpg",
+  "release_date": "2020-05-05",
+  "title": "Title",
+  "video": false,
+  "vote_average": 1.0,
+  "vote_count": 1
+};
+
+final testTvModel = TvModel(
+  backdropPath: "/etj8E2o0Bud0HkONVQPjyCkIvpv.jpg",
+  firstAirDate: "2022-08-21",
+  genreIds: [10765, 18, 10759],
+  id: 94997,
+  name: "House of the Dragon",
+  originCountry: ["US"],
+  originalLanguage: "en",
+  originalName: "House of the Dragon",
+  overview:
+      "The Targaryen dynasty is at the absolute apex of its power, with more than 15 dragons under their yoke. Most empires crumble from such heights. In the case of the Targaryens, their slow fall begins when King Viserys breaks with a century of tradition by naming his daughter Rhaenyra heir to the Iron Throne. But when Viserys later fathers a son, the court is shocked when Rhaenyra retains her status as his heir, and seeds of division sow friction across the realm.",
+  popularity: 7490.466,
+  posterPath: "/17TTFFAXcg1hKAi1smsXsbpipru.jpg",
+  voteAverage: 8.6,
+  voteCount: 1437,
+);
