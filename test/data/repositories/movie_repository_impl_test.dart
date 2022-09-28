@@ -498,13 +498,13 @@ void main() {
     });
   });
 
-  group('get tv popular', () {
+  group('get popular tv', () {
     test('should return list of tv', () async {
       // arrange
-      when(mockRemoteDataSource.getTvPopular())
+      when(mockRemoteDataSource.getPopularTv())
           .thenAnswer((_) async => tTvModelList);
       // act
-      final result = await repository.getTvPopular();
+      final result = await repository.getPopularTv();
       // assert
       final resultList = result.getOrElse(() => []);
       expect(resultList, tTvList);

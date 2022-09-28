@@ -15,7 +15,7 @@ abstract class MovieRemoteDataSource {
   Future<MovieDetailResponse> getMovieDetail(int id);
   Future<List<MovieModel>> getMovieRecommendations(int id);
   Future<List<MovieModel>> searchMovies(String query);
-  Future<List<TvModel>> getTvPopular();
+  Future<List<TvModel>> getPopularTv();
 }
 
 class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
@@ -99,7 +99,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
   }
 
   @override
-  Future<List<TvModel>> getTvPopular() async {
+  Future<List<TvModel>> getPopularTv() async {
     final response =
         await client.get(Uri.parse('$BASE_URL/tv/popular?$API_KEY'));
 

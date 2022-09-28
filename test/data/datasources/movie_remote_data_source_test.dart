@@ -205,7 +205,7 @@ void main() {
     });
   });
 
-  group('get TV Popular', () {
+  group('get popular tv', () {
     final tTvPopularResult = TvResponse.fromJSON(
             json.decode(readJson('dummy_data/tv_dummy/popular.json')))
         .listTvModel;
@@ -217,7 +217,7 @@ void main() {
           .thenAnswer((_) async =>
               http.Response(readJson('dummy_data/tv_dummy/popular.json'), 200));
       // act
-      final result = await dataSource.getTvPopular();
+      final result = await dataSource.getPopularTv();
       // assert
       expect(result, tTvPopularResult);
     });
@@ -228,7 +228,7 @@ void main() {
       when(mockHttpClient.get(Uri.parse('$BASE_URL/tv/popular?$API_KEY')))
           .thenAnswer((_) async => http.Response('Not Found', 404));
       // act
-      final call = dataSource.getTvPopular();
+      final call = dataSource.getPopularTv();
       // assert
       expect(() => call, throwsA(isA<ServerException>()));
     });
