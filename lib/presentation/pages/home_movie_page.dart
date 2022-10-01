@@ -4,6 +4,7 @@ import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/movie_detail_page.dart';
 import 'package:ditonton/presentation/pages/popular_movies_page.dart';
+import 'package:ditonton/presentation/pages/tv_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
 import 'package:ditonton/presentation/pages/search_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
@@ -46,6 +47,13 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               title: Text('Movies'),
               onTap: () {
                 Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.tv),
+              title: Text('Tv'),
+              onTap: () {
+                Navigator.pushNamed(context, TvPage.ROUTE_NAME);
               },
             ),
             ListTile(

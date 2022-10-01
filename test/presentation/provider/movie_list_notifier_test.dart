@@ -53,7 +53,7 @@ void main() {
 
   group('now playing movies', () {
     test('initialState should be Empty', () {
-      expect(provider.nowPlayingState, equals(RequestState.Empty));
+      expect(provider.nowPlayingState, RequestState.Empty);
     });
 
     test('should get data from the usecase', () async {

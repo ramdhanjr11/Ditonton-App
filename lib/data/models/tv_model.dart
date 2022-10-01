@@ -18,17 +18,17 @@ class TvModel extends Equatable {
     required this.originalLanguage,
   });
 
-  final String backdropPath;
-  final String firstAirDate;
+  final String? backdropPath;
+  final String? firstAirDate;
   final List<int> genreIds;
   final int id;
-  final String name;
+  final String? name;
   final List<String> originCountry;
-  final String originalLanguage;
-  final String originalName;
-  final String overview;
+  final String? originalLanguage;
+  final String? originalName;
+  final String? overview;
   final double popularity;
-  final String posterPath;
+  final String? posterPath;
   final double voteAverage;
   final int voteCount;
 
@@ -42,10 +42,10 @@ class TvModel extends Equatable {
         originalLanguage: json["original_language"],
         originalName: json["original_name"],
         overview: json["overview"],
-        popularity: json["popularity"],
+        popularity: json["popularity"].toDouble(),
         posterPath: json["poster_path"],
-        voteAverage: json["vote_average"],
-        voteCount: json["vote_count"],
+        voteAverage: json["vote_average"].toDouble(),
+        voteCount: json["vote_count"].toInt(),
       );
 
   Map<String, dynamic> toJSON() => {
@@ -65,17 +65,17 @@ class TvModel extends Equatable {
       };
 
   Tv toEntity() => Tv(
-        backdropPath: backdropPath,
-        firstAirDate: firstAirDate,
+        backdropPath: backdropPath ?? "",
+        firstAirDate: firstAirDate ?? "",
         genreIds: genreIds,
         id: id,
-        name: name,
+        name: name!,
         originCountry: originCountry,
-        originalLanguage: originalLanguage,
-        originalName: originalName,
-        overview: overview,
+        originalLanguage: originalLanguage ?? "",
+        originalName: originalName!,
+        overview: overview ?? "",
         popularity: popularity,
-        posterPath: posterPath,
+        posterPath: posterPath ?? "",
         voteAverage: voteAverage,
         voteCount: voteCount,
       );

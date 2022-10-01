@@ -7,7 +7,7 @@ import '../entities/tv.dart';
 class GetPopularTv {
   final MovieRepository movieRepository;
 
-  GetPopularTv({required this.movieRepository});
+  GetPopularTv(this.movieRepository);
 
   Future<Either<Failure, List<Tv>>> execute() async {
     return movieRepository.getPopularTv();

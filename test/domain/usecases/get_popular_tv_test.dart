@@ -12,7 +12,7 @@ void main() {
 
   setUp(() {
     mockMovieRepository = MockMovieRepository();
-    usecase = GetPopularTv(movieRepository: mockMovieRepository);
+    usecase = GetPopularTv(mockMovieRepository);
   });
 
   final tTv = <Tv>[];
