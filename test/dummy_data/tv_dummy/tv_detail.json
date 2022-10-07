@@ -1,0 +1,20 @@
+{
+    "adult": false,
+    "backdrop_path": "backdrop_path",
+    "first_air_date": "firstAirDate",
+    "genres": [],
+    "id": 1,
+    "last_air_date": "lastAirDate",
+    "name": "name",
+    "number_of_episodes": 1,
+    "number_of_seasons": 2,
+    "original_language": "en",
+    "original_name": "name",
+    "overview": "overview",
+    "popularity": 4187.745,
+    "poster_path": "poster_path",
+    "seasons": [],
+    "status": "status",
+    "vote_average": 8.607,
+    "vote_count": 1493
+}

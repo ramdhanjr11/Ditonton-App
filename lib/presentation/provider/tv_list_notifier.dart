@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/entities/tv.dart';
 import 'package:ditonton/domain/usecases/get_popular_tv.dart';
@@ -23,18 +21,15 @@ class TvListNotifier extends ChangeNotifier {
     _popularTvState = RequestState.Loading;
     notifyListeners();
 
-    log('testing: masuk');
     final result = await getPopularTv.execute();
     result.fold((failure) {
       _popularTvState = RequestState.Error;
       _message = failure.message;
       notifyListeners();
-      log('testing: gagal');
     }, (tvData) {
       _popularTvState = RequestState.Loaded;
       _popularTv = tvData;
       notifyListeners();
-      log('testing: berhasil');
     });
   }
 }

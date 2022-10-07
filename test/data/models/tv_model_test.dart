@@ -37,7 +37,7 @@ void main() {
     voteCount: 1437,
   );
 
-  test('should be a sub class of movie entity', () async {
+  test('should be a sub class of Tv entity', () async {
     final result = tTvModel.toEntity();
     expect(result, tTv);
   });

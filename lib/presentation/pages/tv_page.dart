@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/presentation/provider/tv_list_notifier.dart';
@@ -44,10 +42,7 @@ class _TvPageState extends State<TvPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Popular Tv',
-                style: kHeading6,
-              ),
+              _buildSubHeading(title: "Popular TV", onTap: () {}),
               Consumer<TvListNotifier>(builder: (context, data, child) {
                 final state = data.popularTvState;
                 if (state == RequestState.Loading) {

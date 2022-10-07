@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/usecases/get_now_playing_movies.dart';
 import 'package:ditonton/common/state_enum.dart';
@@ -43,20 +41,17 @@ class MovieListNotifier extends ChangeNotifier {
     _nowPlayingState = RequestState.Loading;
     notifyListeners();
 
-    log('testing: masuk');
     final result = await getNowPlayingMovies.execute();
     result.fold(
       (failure) {
         _nowPlayingState = RequestState.Error;
         _message = failure.message;
         notifyListeners();
-        log('testing: gagal');
       },
       (moviesData) {
         _nowPlayingState = RequestState.Loaded;
         _nowPlayingMovies = moviesData;
         notifyListeners();
-        log('testing: berhasil');
       },
     );
   }

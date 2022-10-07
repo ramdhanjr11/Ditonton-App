@@ -233,4 +233,5 @@ void main() {
       expect(() => call, throwsA(isA<ServerException>()));
     });
   });
+  group('get detail tv', () {});
 }
