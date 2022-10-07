@@ -4,6 +4,7 @@ import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
 import 'package:ditonton/data/models/movie_detail_model.dart';
 import 'package:ditonton/data/models/movie_response.dart';
 import 'package:ditonton/common/exception.dart';
+import 'package:ditonton/data/models/tv_detail_model.dart';
 import 'package:ditonton/data/models/tv_response.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -233,5 +234,31 @@ void main() {
       expect(() => call, throwsA(isA<ServerException>()));
     });
   });
-  group('get detail tv', () {});
+  group('get detail tv', () {
+    final tvId = 1;
+    final tTvDetail = TvDetailResponse.fromJSON(
+        json.decode(readJson('dummy_data/tv_dummy/tv_detail.json')));
+
+    test('should return detail tv when response code is 200', () async {
+      // arrange
+      when(mockHttpClient.get(Uri.parse('$BASE_URL/tv/$tvId?api_key=$API_KEY')))
+          .thenAnswer((_) async => http.Response(
+              readJson('dummy_data/tv_dummy/tv_detail.json'), 200));
+      // act
+      final result = await dataSource.getTvDetail(tvId);
+      // assert
+      expect(result, tTvDetail);
+    });
+
+    test('should throw Server Exception when the response code is 404 or other',
+        () async {
+      // arrange
+      when(mockHttpClient.get(Uri.parse('$BASE_URL/tv/$tvId?api_key=$API_KEY')))
+          .thenAnswer((_) async => http.Response('Server Error', 404));
+      // act
+      final call = dataSource.getTvDetail(tvId);
+      // assert
+      expect(() => call, throwsA(isA<ServerException>()));
+    });
+  });
 }
