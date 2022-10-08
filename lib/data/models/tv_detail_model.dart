@@ -1,3 +1,4 @@
+import 'package:ditonton/domain/entities/tv_detail.dart';
 import 'package:equatable/equatable.dart';
 
 import 'genre_model.dart';
@@ -88,6 +89,26 @@ class TvDetailResponse extends Equatable {
         "vote_count": voteCount,
         "seasons": List<dynamic>.from(seasons.map((x) => x.toJSON())),
       };
+
+  TvDetail toEntity() => TvDetail(
+      adult: adult,
+      backdropPath: backdropPath,
+      firstAirDate: firstAirDate,
+      genres: genres.map((e) => e.toEntity()).toList(),
+      id: id,
+      lastAirDate: lastAirDate,
+      name: name,
+      numberOfEpisodes: numberOfEpisodes,
+      numberOfSeasons: numberOfSeasons,
+      originalLanguage: originalLanguage,
+      originalName: originalName,
+      overview: overview,
+      popularity: popularity,
+      posterPath: posterPath,
+      status: status,
+      voteAverage: voteAverage,
+      voteCount: voteCount,
+      seasons: seasons.map((e) => e.toEntity()).toList());
 
   @override
   List<Object?> get props => [

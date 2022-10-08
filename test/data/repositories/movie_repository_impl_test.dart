@@ -1,20 +1,24 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/data/models/genre_model.dart';
 import 'package:ditonton/data/models/movie_detail_model.dart';
 import 'package:ditonton/data/models/movie_model.dart';
+import 'package:ditonton/data/models/tv_detail_model.dart';
 import 'package:ditonton/data/models/tv_model.dart';
 import 'package:ditonton/data/repositories/movie_repository_impl.dart';
 import 'package:ditonton/common/exception.dart';
 import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/tv.dart';
+import 'package:ditonton/domain/entities/tv_detail.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../dummy_data/dummy_objects.dart';
 import '../../helpers/test_helper.mocks.dart';
+import '../../json_reader.dart';
 
 void main() {
   late MovieRepositoryImpl repository;
@@ -106,6 +110,27 @@ void main() {
 
   final tTvModelList = [tTvModel];
   final tTvList = [tTv];
+
+  final tTvDetail = TvDetail(
+    adult: false,
+    backdropPath: "backdrop_path",
+    firstAirDate: "firstAirDate",
+    genres: [],
+    id: 1,
+    lastAirDate: "lastAirDate",
+    name: "name",
+    numberOfEpisodes: 1,
+    numberOfSeasons: 2,
+    originalLanguage: "en",
+    originalName: "name",
+    overview: "overview",
+    popularity: 4187.745,
+    posterPath: "poster_path",
+    seasons: [],
+    status: "status",
+    voteAverage: 8.607,
+    voteCount: 1493,
+  );
 
   group('Now Playing Movies', () {
     test('should check if the device is online', () async {
@@ -508,6 +533,46 @@ void main() {
       // assert
       final resultList = result.getOrElse(() => []);
       expect(resultList, tTvList);
+    });
+
+    test(
+        'should return ServerException when the call of remote data is unsuccessfull',
+        () async {
+      // arrange
+      when(mockRemoteDataSource.getPopularTv()).thenThrow(ServerException());
+      // act
+      final result = await repository.getPopularTv();
+      // assert
+      verify(mockRemoteDataSource.getPopularTv());
+      expect(result, equals(Left(ServerFailure(''))));
+    });
+  });
+
+  group('get tv detail', () {
+    final tvId = 1;
+    test('should return tv detail data', () async {
+      // arrange
+      when(mockRemoteDataSource.getTvDetail(tvId)).thenAnswer((_) async =>
+          TvDetailResponse.fromJSON(
+              json.decode(readJson('dummy_data/tv_dummy/tv_detail.json'))));
+      // act
+      final call = await repository.getTvDetail(tvId);
+      // assert
+      verify(mockRemoteDataSource.getTvDetail(tvId));
+      final result = call.getOrElse(() => tTvDetail);
+      expect(result, tTvDetail);
+    });
+
+    test(
+        'should return ServerFailure when the call of remote data source is unsuccessfull',
+        () async {
+      // arrange
+      when(mockRemoteDataSource.getTvDetail(tvId)).thenThrow(ServerException());
+      // act
+      final result = await repository.getTvDetail(tvId);
+      // assert
+      verify(mockRemoteDataSource.getTvDetail(1));
+      expect(result, equals(Left(ServerFailure(''))));
     });
   });
 }
