@@ -556,11 +556,10 @@ void main() {
           TvDetailResponse.fromJSON(
               json.decode(readJson('dummy_data/tv_dummy/tv_detail.json'))));
       // act
-      final call = await repository.getTvDetail(tvId);
+      final result = await repository.getTvDetail(tvId);
       // assert
       verify(mockRemoteDataSource.getTvDetail(tvId));
-      final result = call.getOrElse(() => tTvDetail);
-      expect(result, tTvDetail);
+      expect(result, equals(Right(tTvDetail)));
     });
 
     test(
@@ -571,7 +570,7 @@ void main() {
       // act
       final result = await repository.getTvDetail(tvId);
       // assert
-      verify(mockRemoteDataSource.getTvDetail(1));
+      verify(mockRemoteDataSource.getTvDetail(tvId));
       expect(result, equals(Left(ServerFailure(''))));
     });
   });

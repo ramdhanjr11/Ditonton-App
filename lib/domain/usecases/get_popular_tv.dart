@@ -9,7 +9,7 @@ class GetPopularTv {
 
   GetPopularTv(this.movieRepository);
 
-  Future<Either<Failure, List<Tv>>> execute() async {
+  Future<Either<Failure, List<Tv>>> execute() {
     return movieRepository.getPopularTv();
   }
 }

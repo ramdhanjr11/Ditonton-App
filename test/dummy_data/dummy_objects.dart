@@ -3,6 +3,7 @@ import 'package:ditonton/data/models/tv_model.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
+import 'package:ditonton/domain/entities/tv_detail.dart';
 
 final testMovie = Movie(
   adult: false,
@@ -113,4 +114,25 @@ final testTvModel = TvModel(
   posterPath: "/17TTFFAXcg1hKAi1smsXsbpipru.jpg",
   voteAverage: 8.6,
   voteCount: 1437,
+);
+
+final testTvDetail = TvDetail(
+  adult: false,
+  backdropPath: "backdrop_path",
+  firstAirDate: "firstAirDate",
+  genres: [],
+  id: 1,
+  lastAirDate: "lastAirDate",
+  name: "name",
+  numberOfEpisodes: 1,
+  numberOfSeasons: 2,
+  originalLanguage: "en",
+  originalName: "name",
+  overview: "overview",
+  popularity: 4187.745,
+  posterPath: "poster_path",
+  seasons: [],
+  status: "status",
+  voteAverage: 8.607,
+  voteCount: 1493,
 );
