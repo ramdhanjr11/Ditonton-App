@@ -261,4 +261,32 @@ void main() {
       expect(() => call, throwsA(isA<ServerException>()));
     });
   });
+
+  group('get Tv Airing Today', () {
+    final tTvAiringToday = TvResponse.fromJSON(
+            json.decode(readJson('dummy_data/tv_dummy/airing_today.json')))
+        .listTvModel;
+    test('should return tv airing today data when response code is 200',
+        () async {
+      // arrange
+      when(mockHttpClient.get(Uri.parse('$BASE_URL/tv/airing_today?$API_KEY')))
+          .thenAnswer((_) async => http.Response(
+              readJson('dummy_data/tv_dummy/airing_today.json'), 200));
+      // act
+      final result = await dataSource.getTvAiringToday();
+      // assert
+      expect(result, tTvAiringToday);
+    });
+
+    test('should throw ServerException when response code is 404 or other',
+        () async {
+      // arrange
+      when(mockHttpClient.get(Uri.parse('$BASE_URL/tv/airing_today?$API_KEY')))
+          .thenAnswer((_) async => http.Response('Server Error', 404));
+      // act
+      final call = dataSource.getTvAiringToday();
+      // assert
+      expect(call, throwsA(isA<ServerException>()));
+    });
+  });
 }
