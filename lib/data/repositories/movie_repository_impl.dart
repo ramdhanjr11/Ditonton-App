@@ -164,4 +164,16 @@ class MovieRepositoryImpl implements MovieRepository {
       return Left(ConnectionFailure('Failed to connect to the network'));
     }
   }
+
+  @override
+  Future<Either<Failure, List<Tv>>> getTvAiringToday() async {
+    try {
+      final result = await remoteDataSource.getTvAiringToday();
+      return Right(result.map((e) => e.toEntity()).toList());
+    } on ServerException {
+      return Left(ServerFailure(''));
+    } on SocketException {
+      return Left(ConnectionFailure('Failed to connect to the network'));
+    }
+  }
 }
