@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
 import 'package:ditonton/data/models/movie_detail_model.dart';
 import 'package:ditonton/data/models/movie_response.dart';
@@ -287,6 +288,34 @@ void main() {
       final call = dataSource.getTvAiringToday();
       // assert
       expect(() => call, throwsA(isA<ServerException>()));
+    });
+  });
+
+  group('get tv top rated', () {
+    final tTvTopRated = TvResponse.fromJSON(
+            json.decode(readJson('dummy_data/tv_dummy/top_rated.json')))
+        .listTvModel;
+    test('should return list of tv top rated when response code is 200',
+        () async {
+      // arrange
+      when(mockHttpClient.get(Uri.parse('$BASE_URL/tv/top_rated?$API_KEY')))
+          .thenAnswer((_) async => http.Response(
+              readJson('dummy_data/tv_dummy/top_rated.json'), 200));
+      // act
+      final result = await dataSource.getTvTopRated();
+      // assert
+      expect(result, tTvTopRated);
+    });
+
+    test('should throw ServerException when response code is 404 or other',
+        () async {
+      // arrange
+      when(mockHttpClient.get(Uri.parse('$BASE_URL/tv/top_rated?$API_KEY')))
+          .thenAnswer((_) async => http.Response('Server Error', 404));
+      // act
+      final result = dataSource.getTvTopRated();
+      // assert
+      expect(() => result, throwsA(isA<ServerException>()));
     });
   });
 }

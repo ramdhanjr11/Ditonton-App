@@ -642,4 +642,44 @@ void main() {
           result, Left(ConnectionFailure('Failed to connect to the network')));
     });
   });
+
+  group('get list of tv top rated', () {
+    test(
+        'should get list of tv top rated when the call of remote data source is successful',
+        () async {
+      // arrange
+      when(mockRemoteDataSource.getTvTopRated())
+          .thenAnswer((_) async => tTvModelList);
+      // act
+      final call = await repository.getTvTopRated();
+      // assert
+      verify(mockRemoteDataSource.getTvTopRated());
+      final result = call.getOrElse(() => []);
+      expect(result, tTvList);
+    });
+  });
+
+  test(
+      'should throw ServerFailure when the call of remote data source is unsucessful',
+      () async {
+    // arrange
+    when(mockRemoteDataSource.getTvTopRated()).thenThrow(ServerException());
+    // act
+    final result = await repository.getTvTopRated();
+    // assert
+    expect(result, Left(ServerFailure('')));
+  });
+
+  test(
+      'should throw SocketException when the call of remote data source is not connected to internet',
+      () async {
+    // arrange
+    when(mockRemoteDataSource.getTvTopRated())
+        .thenThrow(SocketException('Failed to connect to the network'));
+    // act
+    final result = await repository.getTvTopRated();
+    // assert
+    expect(result,
+        equals(Left(ConnectionFailure('Failed to connect to the network'))));
+  });
 }
