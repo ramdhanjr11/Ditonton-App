@@ -1,0 +1,24 @@
+{
+    "page": 1,
+    "results": [
+        {
+            "backdrop_path": "/k4vgXFmthBqQFuHWraI2KdP8cFO.jpg",
+            "first_air_date": "2019-02-12",
+            "genre_ids": [
+                35
+            ],
+            "id": 78950,
+            "name": "Miracle Workers",
+            "origin_country": [
+                "US"
+            ],
+            "original_language": "en",
+            "original_name": "Miracle Workers",
+            "overview": "The first season of this comedy anthology is set in the offices of Heaven Inc. When God plans to destroy the Earth, two low-level angels must convince their boss to save humanity. They bet him they can pull off their most impossible miracle yet: help two humans fall in love.",
+            "popularity": 21.729,
+            "poster_path": "/2rTZrFxEXAb6y2Fwj5oHP2jOwhx.jpg",
+            "vote_average": 7,
+            "vote_count": 162
+        }
+    ]
+}

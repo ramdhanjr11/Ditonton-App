@@ -724,4 +724,48 @@ void main() {
           equals(Left(ConnectionFailure('Failed to connect to the network'))));
     });
   });
+
+  group('search tv', () {
+    final tTvQuery = 'miracle';
+    final tTvModelList = <TvModel>[];
+    final tTvList = <Tv>[];
+    test(
+        'should return list of tv shows when the call of remote data source is successful',
+        () async {
+      // arrange
+      when(mockRemoteDataSource.searchTv(tTvQuery))
+          .thenAnswer((_) async => tTvModelList);
+      // act
+      final call = await repository.searchTv(tTvQuery);
+      // assert
+      verify(mockRemoteDataSource.searchTv(tTvQuery));
+      final result = call.getOrElse(() => []);
+      expect(result, tTvList);
+    });
+
+    test(
+        'should return ServerFailure when the call of remote data source is unsuccessful',
+        () async {
+      // arrange
+      when(mockRemoteDataSource.searchTv(tTvQuery))
+          .thenThrow(ServerException());
+      // act
+      final result = await repository.searchTv(tTvQuery);
+      // assert
+      expect(result, Left(ServerFailure('')));
+    });
+
+    test(
+        'should return ConnectionFailure when the call of remote data source is not connected to the internet',
+        () async {
+      // arrange
+      when(mockRemoteDataSource.searchTv(tTvQuery))
+          .thenThrow(SocketException('Failed to connect to the network'));
+      // act
+      final result = await repository.searchTv(tTvQuery);
+      // assert
+      expect(
+          result, Left(ConnectionFailure('Failed to connect to the network')));
+    });
+  });
 }
