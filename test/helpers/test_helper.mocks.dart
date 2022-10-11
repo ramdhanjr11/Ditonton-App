@@ -190,6 +190,13 @@ class MockMovieRepository extends _i1.Mock implements _i6.MovieRepository {
               _FakeEither_0<_i8.Failure, List<_i11.Tv>>(
                   this, Invocation.method(#getTvRecommendations, [id])))) as _i7
           .Future<_i2.Either<_i8.Failure, List<_i11.Tv>>>);
+  @override
+  _i7.Future<_i2.Either<_i8.Failure, List<_i11.Tv>>> searchTv(String? query) =>
+      (super.noSuchMethod(Invocation.method(#searchTv, [query]),
+          returnValue: _i7.Future<_i2.Either<_i8.Failure, List<_i11.Tv>>>.value(
+              _FakeEither_0<_i8.Failure, List<_i11.Tv>>(
+                  this, Invocation.method(#searchTv, [query])))) as _i7
+          .Future<_i2.Either<_i8.Failure, List<_i11.Tv>>>);
 }
 
 /// A class which mocks [MovieRemoteDataSource].
