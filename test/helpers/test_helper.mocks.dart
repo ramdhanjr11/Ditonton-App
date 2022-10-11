@@ -252,6 +252,12 @@ class MockMovieRemoteDataSource extends _i1.Mock
           Invocation.method(#getTvTopRated, []),
           returnValue: _i7.Future<List<_i15.TvModel>>.value(<_i15.TvModel>[]))
       as _i7.Future<List<_i15.TvModel>>);
+  @override
+  _i7.Future<List<_i15.TvModel>> getTvRecommendations(int? id) =>
+      (super.noSuchMethod(Invocation.method(#getTvRecommendations, [id]),
+              returnValue:
+                  _i7.Future<List<_i15.TvModel>>.value(<_i15.TvModel>[]))
+          as _i7.Future<List<_i15.TvModel>>);
 }
 
 /// A class which mocks [MovieLocalDataSource].
