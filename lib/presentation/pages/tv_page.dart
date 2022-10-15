@@ -23,7 +23,8 @@ class _TvPageState extends State<TvPage> {
     super.initState();
     Future.microtask(() => Provider.of<TvListNotifier>(context, listen: false)
       ..fetchPopularTv()
-      ..fetchTvTopRated());
+      ..fetchTvTopRated()
+      ..fetchTvAiringToday());
   }
 
   @override
@@ -65,6 +66,19 @@ class _TvPageState extends State<TvPage> {
                   );
                 } else if (state == RequestState.Loaded) {
                   return TvList(data.tvTopRated);
+                } else {
+                  return Text('Failed');
+                }
+              }),
+              _buildSubHeading(title: "Airing Today", onTap: () {}),
+              Consumer<TvListNotifier>(builder: (context, data, child) {
+                final state = data.tvAiringTodayState;
+                if (state == RequestState.Loading) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state == RequestState.Loaded) {
+                  return TvList(data.tvAiringToday);
                 } else {
                   return Text('Failed');
                 }
