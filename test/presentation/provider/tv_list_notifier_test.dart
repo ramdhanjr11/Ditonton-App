@@ -3,6 +3,7 @@ import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/entities/tv.dart';
 import 'package:ditonton/domain/usecases/get_popular_tv.dart';
+import 'package:ditonton/domain/usecases/get_tv_top_rated.dart';
 import 'package:ditonton/presentation/provider/tv_list_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -12,16 +13,20 @@ import 'tv_list_notifier_test.mocks.dart';
 
 @GenerateMocks([
   GetPopularTv,
+  GetTvTopRated,
 ])
 void main() {
   late TvListNotifier provider;
   late int listenerCallCount;
   late MockGetPopularTv mockGetPopularTv;
+  late MockGetTvTopRated mockGetTvTopRated;
 
   setUp(() {
     listenerCallCount = 0;
     mockGetPopularTv = MockGetPopularTv();
-    provider = TvListNotifier(getPopularTv: mockGetPopularTv)
+    mockGetTvTopRated = MockGetTvTopRated();
+    provider = TvListNotifier(
+        getPopularTv: mockGetPopularTv, getTvTopRated: mockGetTvTopRated)
       ..addListener(() {
         listenerCallCount += 1;
       });
@@ -87,6 +92,54 @@ void main() {
       await provider.fetchPopularTv();
       // assert
       expect(provider.popularTvState, RequestState.Error);
+      expect(provider.message, 'Server Failure');
+      expect(listenerCallCount, 2);
+    });
+  });
+
+  group('tv top rated', () {
+    test('initialState should be empty', () async {
+      expect(provider.tvTopRatedState, equals(RequestState.Empty));
+    });
+
+    test('should get data from the usecase', () async {
+      // arrange
+      when(mockGetTvTopRated.execute()).thenAnswer((_) async => Right(tTvList));
+      // act
+      provider.fetchTvTopRated();
+      // assert
+      verify(mockGetTvTopRated.execute());
+    });
+
+    test('should change tv top rated state to loading when usecase is called',
+        () async {
+      // arrange
+      when(mockGetTvTopRated.execute()).thenAnswer((_) async => Right(tTvList));
+      // act
+      provider.fetchTvTopRated();
+      // assert
+      expect(provider.tvTopRatedState, RequestState.Loading);
+    });
+    test('should change tv top rated when data is gotten sucessfully',
+        () async {
+      // arrange
+      when(mockGetTvTopRated.execute()).thenAnswer((_) async => Right(tTvList));
+      // act
+      await provider.fetchTvTopRated();
+      // assert
+      expect(provider.tvTopRatedState, RequestState.Loaded);
+      expect(provider.tvTopRated, tTvList);
+      expect(listenerCallCount, 2);
+    });
+
+    test('should return error when data is unsucessful', () async {
+      // arrange
+      when(mockGetTvTopRated.execute())
+          .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+      // act
+      await provider.fetchTvTopRated();
+      // assert
+      expect(provider.tvTopRatedState, RequestState.Error);
       expect(provider.message, 'Server Failure');
       expect(listenerCallCount, 2);
     });
