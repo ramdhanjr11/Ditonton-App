@@ -3,6 +3,7 @@ import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/entities/tv.dart';
 import 'package:ditonton/domain/usecases/get_popular_tv.dart';
+import 'package:ditonton/domain/usecases/get_tv_airing_today.dart';
 import 'package:ditonton/domain/usecases/get_tv_top_rated.dart';
 import 'package:ditonton/presentation/provider/tv_list_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -14,20 +15,25 @@ import 'tv_list_notifier_test.mocks.dart';
 @GenerateMocks([
   GetPopularTv,
   GetTvTopRated,
+  GetTvAiringToday,
 ])
 void main() {
   late TvListNotifier provider;
   late int listenerCallCount;
   late MockGetPopularTv mockGetPopularTv;
   late MockGetTvTopRated mockGetTvTopRated;
+  late MockGetTvAiringToday mockGetTvAiringToday;
 
   setUp(() {
     listenerCallCount = 0;
     mockGetPopularTv = MockGetPopularTv();
     mockGetTvTopRated = MockGetTvTopRated();
+    mockGetTvAiringToday = MockGetTvAiringToday();
     provider = TvListNotifier(
-        getPopularTv: mockGetPopularTv, getTvTopRated: mockGetTvTopRated)
-      ..addListener(() {
+      getPopularTv: mockGetPopularTv,
+      getTvTopRated: mockGetTvTopRated,
+      getTvAiringToday: mockGetTvAiringToday,
+    )..addListener(() {
         listenerCallCount += 1;
       });
   });
@@ -140,6 +146,48 @@ void main() {
       await provider.fetchTvTopRated();
       // assert
       expect(provider.tvTopRatedState, RequestState.Error);
+      expect(provider.message, 'Server Failure');
+      expect(listenerCallCount, 2);
+    });
+  });
+
+  group('tv airing today', () {
+    test('initiateState should be empty', () async {
+      expect(provider.tvAiringTodayState, RequestState.Empty);
+    });
+
+    test('should change state to loading when usecase is called', () async {
+      // arrange
+      when(mockGetTvAiringToday.execute())
+          .thenAnswer((_) async => Right(tTvList));
+      // act
+      provider.fetchTvAiringToday();
+      // assert
+      expect(provider.tvAiringTodayState, RequestState.Loading);
+      expect(listenerCallCount, 1);
+    });
+
+    test('should change tv airing today when data is gotten successful',
+        () async {
+      // arrange
+      when(mockGetTvAiringToday.execute())
+          .thenAnswer((_) async => Right(tTvList));
+      // act
+      await provider.fetchTvAiringToday();
+      // assert
+      expect(provider.tvAiringTodayState, RequestState.Loaded);
+      expect(provider.tvAiringToday, tTvList);
+      expect(listenerCallCount, 2);
+    });
+
+    test('should return error when data is unsuccessful', () async {
+      // arrange
+      when(mockGetTvAiringToday.execute())
+          .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+      // act
+      await provider.fetchTvAiringToday();
+      // assert
+      expect(provider.tvAiringTodayState, RequestState.Error);
       expect(provider.message, 'Server Failure');
       expect(listenerCallCount, 2);
     });
