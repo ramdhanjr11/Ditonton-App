@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
+import 'package:ditonton/presentation/pages/airing_today_tv_page.dart';
 import 'package:ditonton/presentation/pages/popular_tv_page.dart';
 import 'package:ditonton/presentation/pages/search_tv_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_tv_page.dart';
@@ -50,10 +51,11 @@ class _TvPageState extends State<TvPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildSubHeading(
-                  title: "Popular TV",
-                  onTap: () {
-                    Navigator.pushNamed(context, PopularTvPage.ROUTE_NAME);
-                  }),
+                title: "Popular TV",
+                onTap: () {
+                  Navigator.pushNamed(context, PopularTvPage.ROUTE_NAME);
+                },
+              ),
               Consumer<TvListNotifier>(builder: (context, data, child) {
                 final state = data.popularTvState;
                 if (state == RequestState.Loading) {
@@ -67,10 +69,11 @@ class _TvPageState extends State<TvPage> {
                 }
               }),
               _buildSubHeading(
-                  title: "Top Rated",
-                  onTap: () {
-                    Navigator.pushNamed(context, TopRatedTvPage.ROUTE_NAME);
-                  }),
+                title: "Top Rated",
+                onTap: () {
+                  Navigator.pushNamed(context, TopRatedTvPage.ROUTE_NAME);
+                },
+              ),
               Consumer<TvListNotifier>(builder: (context, data, child) {
                 final state = data.tvTopRatedState;
                 if (state == RequestState.Loading) {
@@ -83,7 +86,12 @@ class _TvPageState extends State<TvPage> {
                   return Text('Failed');
                 }
               }),
-              _buildSubHeading(title: "Airing Today", onTap: () {}),
+              _buildSubHeading(
+                title: "Airing Today",
+                onTap: () {
+                  Navigator.pushNamed(context, AiringTodayTvPage.ROUTE_NAME);
+                },
+              ),
               Consumer<TvListNotifier>(builder: (context, data, child) {
                 final state = data.tvAiringTodayState;
                 if (state == RequestState.Loading) {
