@@ -198,6 +198,33 @@ class MockMovieRepository extends _i1.Mock implements _i6.MovieRepository {
               _FakeEither_0<_i8.Failure, List<_i11.Tv>>(
                   this, Invocation.method(#searchTv, [query])))) as _i7
           .Future<_i2.Either<_i8.Failure, List<_i11.Tv>>>);
+  @override
+  _i7.Future<_i2.Either<_i8.Failure, String>> saveTvWatchlist(
+          _i12.TvDetail? tv) =>
+      (super.noSuchMethod(Invocation.method(#saveTvWatchlist, [tv]),
+              returnValue: _i7.Future<_i2.Either<_i8.Failure, String>>.value(
+                  _FakeEither_0<_i8.Failure, String>(
+                      this, Invocation.method(#saveTvWatchlist, [tv]))))
+          as _i7.Future<_i2.Either<_i8.Failure, String>>);
+  @override
+  _i7.Future<_i2.Either<_i8.Failure, String>> removeTvWatchlist(
+          _i12.TvDetail? tv) =>
+      (super.noSuchMethod(Invocation.method(#removeTvWatchlist, [tv]),
+              returnValue: _i7.Future<_i2.Either<_i8.Failure, String>>.value(
+                  _FakeEither_0<_i8.Failure, String>(
+                      this, Invocation.method(#removeTvWatchlist, [tv]))))
+          as _i7.Future<_i2.Either<_i8.Failure, String>>);
+  @override
+  _i7.Future<bool> isAddedToTvWatchlist(int? id) =>
+      (super.noSuchMethod(Invocation.method(#isAddedToTvWatchlist, [id]),
+          returnValue: _i7.Future<bool>.value(false)) as _i7.Future<bool>);
+  @override
+  _i7.Future<_i2.Either<_i8.Failure, List<_i11.Tv>>> getWatchlistTv() =>
+      (super.noSuchMethod(Invocation.method(#getWatchlistTv, []),
+          returnValue: _i7.Future<_i2.Either<_i8.Failure, List<_i11.Tv>>>.value(
+              _FakeEither_0<_i8.Failure, List<_i11.Tv>>(
+                  this, Invocation.method(#getWatchlistTv, [])))) as _i7
+          .Future<_i2.Either<_i8.Failure, List<_i11.Tv>>>);
 }
 
 /// A class which mocks [MovieRemoteDataSource].
