@@ -17,7 +17,7 @@ class TvSearchNotifier extends ChangeNotifier {
   String _message = "";
   String get message => _message;
 
-  Future<void> searchTv(String query) async {
+  Future<void> fetchTvSearch(String query) async {
     _searchTvState = RequestState.Loading;
     notifyListeners();
 

@@ -23,6 +23,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ditonton/injection.dart' as di;
 
+import 'presentation/provider/tv_search_notifier.dart';
+
 void main() {
   di.init();
   runApp(MyApp());
@@ -56,6 +58,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TvDetailNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TvSearchNotifier>(),
         ),
       ],
       child: MaterialApp(
