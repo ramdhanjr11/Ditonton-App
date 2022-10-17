@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/presentation/pages/search_tv_page.dart';
+import 'package:ditonton/presentation/pages/top_rated_tv_page.dart';
 import 'package:ditonton/presentation/pages/tv_detail_page.dart';
 import 'package:ditonton/presentation/provider/tv_list_notifier.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,11 @@ class _TvPageState extends State<TvPage> {
                   return Text('Failed');
                 }
               }),
-              _buildSubHeading(title: "Top Rated", onTap: () {}),
+              _buildSubHeading(
+                  title: "Top Rated",
+                  onTap: () {
+                    Navigator.pushNamed(context, TopRatedTvPage.ROUTE_NAME);
+                  }),
               Consumer<TvListNotifier>(builder: (context, data, child) {
                 final state = data.tvTopRatedState;
                 if (state == RequestState.Loading) {
