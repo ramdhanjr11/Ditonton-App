@@ -4,6 +4,7 @@ import 'package:ditonton/data/models/tv_table.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
+import 'package:ditonton/domain/entities/tv.dart';
 import 'package:ditonton/domain/entities/tv_detail.dart';
 
 final testMovie = Movie(
@@ -67,6 +68,13 @@ final testMovieFromCache = Movie.watchlist(
 final testWatchlistMovie = Movie.watchlist(
   id: 1,
   title: 'title',
+  posterPath: 'posterPath',
+  overview: 'overview',
+);
+
+final testWatchlistTv = Tv.watchlist(
+  id: 1,
+  name: 'name',
   posterPath: 'posterPath',
   overview: 'overview',
 );
