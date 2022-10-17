@@ -55,7 +55,7 @@ void main() {
     when(searchTvUsecase.execute(tSearchQuery))
         .thenAnswer((_) async => Right(tTvList));
     // act
-    provider.searchTv(tSearchQuery);
+    provider.fetchTvSearch(tSearchQuery);
     // assert
     verify(searchTvUsecase.execute(tSearchQuery));
   });
@@ -65,7 +65,7 @@ void main() {
     when(searchTvUsecase.execute(tSearchQuery))
         .thenAnswer((_) async => Right(tTvList));
     // act
-    provider.searchTv(tSearchQuery);
+    provider.fetchTvSearch(tSearchQuery);
     // assert
     expect(provider.searchTvState, RequestState.Loading);
     expect(listenerCount, 1);
@@ -76,7 +76,7 @@ void main() {
     when(searchTvUsecase.execute(tSearchQuery))
         .thenAnswer((_) async => Right(tTvList));
     // act
-    await provider.searchTv(tSearchQuery);
+    await provider.fetchTvSearch(tSearchQuery);
     // assert
     expect(provider.searchTvState, RequestState.Loaded);
     expect(provider.result, tTvList);
@@ -88,7 +88,7 @@ void main() {
     when(searchTvUsecase.execute(tSearchQuery))
         .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
     // act
-    await provider.searchTv(tSearchQuery);
+    await provider.fetchTvSearch(tSearchQuery);
     // assert
     expect(provider.searchTvState, RequestState.Error);
     expect(provider.message, 'Server Failure');
