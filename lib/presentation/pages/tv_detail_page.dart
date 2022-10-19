@@ -292,10 +292,10 @@ class DetailTvContent extends StatelessWidget {
             padding: const EdgeInsets.all(4.0),
             child: InkWell(
               onTap: () {
-                Navigator.pushReplacementNamed(
-                  context,
-                  TvDetailPage.ROUTE_NAME,
-                  arguments: season.id,
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Coming soon feature'),
+                  ),
                 );
               },
               child: ClipRRect(
