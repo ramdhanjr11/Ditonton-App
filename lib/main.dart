@@ -32,6 +32,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:ditonton/injection.dart' as di;
 
+import 'presentation/bloc/now_playing_movies/now_playing_movies_bloc.dart';
 import 'presentation/bloc/search_movie/search_bloc.dart';
 import 'presentation/provider/tv_search_notifier.dart';
 
@@ -56,6 +57,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => di.locator<PopularMoviesBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => di.locator<NowPlayingMoviesBloc>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TopRatedMoviesNotifier>(),
