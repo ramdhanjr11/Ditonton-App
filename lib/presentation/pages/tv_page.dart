@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
+import 'package:ditonton/presentation/bloc/popular_tv/popular_tv_bloc.dart';
 import 'package:ditonton/presentation/pages/airing_today_tv_page.dart';
 import 'package:ditonton/presentation/pages/popular_tv_page.dart';
 import 'package:ditonton/presentation/pages/search_tv_page.dart';
@@ -7,6 +8,7 @@ import 'package:ditonton/presentation/pages/top_rated_tv_page.dart';
 import 'package:ditonton/presentation/pages/tv_detail_page.dart';
 import 'package:ditonton/presentation/provider/tv_list_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/state_enum.dart';
@@ -25,10 +27,13 @@ class _TvPageState extends State<TvPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => Provider.of<TvListNotifier>(context, listen: false)
-      ..fetchPopularTv()
-      ..fetchTvTopRated()
-      ..fetchTvAiringToday());
+    Future.microtask(() {
+      Provider.of<TvListNotifier>(context, listen: false)
+        ..fetchPopularTv()
+        ..fetchTvTopRated()
+        ..fetchTvAiringToday();
+      BlocProvider.of<PopularTvBloc>(context).add(FetchPopularTv());
+    });
   }
 
   @override
@@ -56,14 +61,14 @@ class _TvPageState extends State<TvPage> {
                   Navigator.pushNamed(context, PopularTvPage.ROUTE_NAME);
                 },
               ),
-              Consumer<TvListNotifier>(builder: (context, data, child) {
-                final state = data.popularTvState;
-                if (state == RequestState.Loading) {
+              BlocBuilder<PopularTvBloc, PopularTvState>(
+                  builder: (context, state) {
+                if (state is PopularTvLoading) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (state == RequestState.Loaded) {
-                  return TvList(data.popularTv);
+                } else if (state is PopularTvHasData) {
+                  return TvList(state.result);
                 } else {
                   return Text('Failed');
                 }
