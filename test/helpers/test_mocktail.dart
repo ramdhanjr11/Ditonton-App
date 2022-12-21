@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:ditonton/presentation/bloc/movie_detail/movie_detail_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie_recommendation/movie_recommendation_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie_watchlist_status/movie_watchlist_status_bloc.dart';
+import 'package:ditonton/presentation/bloc/popular_movies/popular_movies_bloc.dart';
 import 'package:mocktail/mocktail.dart';
 
 // mock movie detail bloc
@@ -33,3 +34,12 @@ class FakeMovieRecommendationEvent extends Fake
 
 class FakeMovieRecommendationState extends Fake
     implements MovieRecommendationState {}
+
+// mock popular movie bloc
+class MockPopularMovieBloc
+    extends MockBloc<PopularMoviesEvent, PopularMoviesState>
+    implements PopularMoviesBloc {}
+
+class FakePopularMovieEvent extends Fake implements PopularMoviesEvent {}
+
+class FakePopularMovieState extends Fake implements PopularMoviesState {}
