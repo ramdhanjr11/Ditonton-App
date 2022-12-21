@@ -32,6 +32,7 @@ import 'package:ditonton/presentation/bloc/now_playing_movies/now_playing_movies
 import 'package:ditonton/presentation/bloc/popular_movies/popular_movies_bloc.dart';
 import 'package:ditonton/presentation/bloc/popular_tv/popular_tv_bloc.dart';
 import 'package:ditonton/presentation/bloc/top_rated_movies/top_rated_movies_bloc.dart';
+import 'package:ditonton/presentation/bloc/top_rated_tv/top_rated_tv_bloc.dart';
 import 'package:ditonton/presentation/bloc/watchlist_movies/watchlist_movies_bloc.dart';
 import 'package:ditonton/presentation/provider/airing_today_tv_notifier.dart';
 import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
@@ -178,6 +179,11 @@ void init() {
   );
   locator.registerFactory(
     () => PopularTvBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TopRatedTvBloc(
       locator(),
     ),
   );

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/presentation/bloc/popular_tv/popular_tv_bloc.dart';
+import 'package:ditonton/presentation/bloc/top_rated_tv/top_rated_tv_bloc.dart';
 import 'package:ditonton/presentation/pages/airing_today_tv_page.dart';
 import 'package:ditonton/presentation/pages/popular_tv_page.dart';
 import 'package:ditonton/presentation/pages/search_tv_page.dart';
@@ -33,6 +34,7 @@ class _TvPageState extends State<TvPage> {
         ..fetchTvTopRated()
         ..fetchTvAiringToday();
       BlocProvider.of<PopularTvBloc>(context).add(FetchPopularTv());
+      BlocProvider.of<TopRatedTvBloc>(context).add(FetchTopRatedTv());
     });
   }
 
@@ -79,14 +81,14 @@ class _TvPageState extends State<TvPage> {
                   Navigator.pushNamed(context, TopRatedTvPage.ROUTE_NAME);
                 },
               ),
-              Consumer<TvListNotifier>(builder: (context, data, child) {
-                final state = data.tvTopRatedState;
-                if (state == RequestState.Loading) {
+              BlocBuilder<TopRatedTvBloc, TopRatedTvState>(
+                  builder: (context, state) {
+                if (state is TopRatedTvLoading) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (state == RequestState.Loaded) {
-                  return TvList(data.tvTopRated);
+                } else if (state is TopRatedTvHasData) {
+                  return TvList(state.result);
                 } else {
                   return Text('Failed');
                 }
