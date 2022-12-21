@@ -38,6 +38,7 @@ import 'presentation/bloc/movie_detail/movie_detail_bloc.dart';
 import 'presentation/bloc/movie_recommendation/movie_recommendation_bloc.dart';
 import 'presentation/bloc/now_playing_movies/now_playing_movies_bloc.dart';
 import 'presentation/bloc/search_movie/search_bloc.dart';
+import 'presentation/bloc/watchlist_movies/watchlist_movies_bloc.dart';
 import 'presentation/provider/tv_search_notifier.dart';
 
 void main() {
@@ -76,6 +77,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => di.locator<MovieRecommendationBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => di.locator<WatchlistMoviesBloc>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TopRatedMoviesNotifier>(),
