@@ -3,6 +3,7 @@ import 'package:ditonton/presentation/bloc/movie_detail/movie_detail_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie_recommendation/movie_recommendation_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie_watchlist_status/movie_watchlist_status_bloc.dart';
 import 'package:ditonton/presentation/bloc/popular_movies/popular_movies_bloc.dart';
+import 'package:ditonton/presentation/bloc/popular_tv/popular_tv_bloc.dart';
 import 'package:ditonton/presentation/bloc/top_rated_movies/top_rated_movies_bloc.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -53,3 +54,11 @@ class MockTopRatedMoviesBloc
 class FakeTopRatedMoviesEvent extends Fake implements TopRatedMoviesEvent {}
 
 class FakeTopRatedMoviesState extends Fake implements TopRatedMoviesState {}
+
+// mock popular tv bloc
+class MockPopularTvBloc extends MockBloc<PopularTvEvent, PopularTvState>
+    implements PopularTvBloc {}
+
+class FakePopularTvEvent extends Fake implements PopularTvEvent {}
+
+class FakePopularTvState extends Fake implements PopularTvState {}

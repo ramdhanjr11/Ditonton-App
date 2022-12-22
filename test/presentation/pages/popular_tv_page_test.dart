@@ -1,26 +1,25 @@
-import 'package:ditonton/common/state_enum.dart';
+import 'package:ditonton/presentation/bloc/popular_tv/popular_tv_bloc.dart';
 import 'package:ditonton/presentation/pages/popular_tv_page.dart';
-import 'package:ditonton/presentation/provider/popular_tv_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:provider/provider.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../dummy_data/dummy_objects.dart';
-import 'popular_tv_page_test.mocks.dart';
+import '../../helpers/test_mocktail.dart';
 
-@GenerateMocks([PopularTvNotifier])
 void main() {
-  late MockPopularTvNotifier mockPopularTvNotifier;
+  late MockPopularTvBloc mockPopularTvBloc;
 
   setUp(() {
-    mockPopularTvNotifier = MockPopularTvNotifier();
+    registerFallbackValue(FakePopularTvEvent());
+    registerFallbackValue(FakePopularTvState());
+    mockPopularTvBloc = MockPopularTvBloc();
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return ChangeNotifierProvider<PopularTvNotifier>.value(
-      value: mockPopularTvNotifier,
+    return BlocProvider<PopularTvBloc>(
+      create: (context) => mockPopularTvBloc,
       child: MaterialApp(
         home: body,
       ),
@@ -31,8 +30,7 @@ void main() {
     'The page should display progressbar when loading',
     (widgetTester) async {
       // arrange
-      when(mockPopularTvNotifier.state).thenReturn(RequestState.Loading);
-      when(mockPopularTvNotifier.result).thenReturn(testTvList);
+      when(() => mockPopularTvBloc.state).thenReturn(PopularTvLoading());
 
       final centerFinder = find.byType(Center);
       final progressFinder = find.byType(CircularProgressIndicator);
@@ -50,8 +48,8 @@ void main() {
     'The page should display listview when data is loaded',
     (widgetTester) async {
       // arrange
-      when(mockPopularTvNotifier.state).thenReturn(RequestState.Loaded);
-      when(mockPopularTvNotifier.result).thenReturn(testTvList);
+      when(() => mockPopularTvBloc.state)
+          .thenReturn(PopularTvHasData(testTvList));
 
       // act
       await widgetTester.pumpWidget(_makeTestableWidget(PopularTvPage()));
@@ -65,8 +63,8 @@ void main() {
     'The page should display error message when load data is error',
     (widgetTester) async {
       // arrange
-      when(mockPopularTvNotifier.state).thenReturn(RequestState.Error);
-      when(mockPopularTvNotifier.message).thenReturn('Failed');
+      when(() => mockPopularTvBloc.state)
+          .thenReturn(PopularTvError('Server Failure'));
 
       final textFinder = find.byKey(Key('error_message'));
 
