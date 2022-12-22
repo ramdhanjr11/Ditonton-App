@@ -1,4 +1,5 @@
 import 'package:ditonton/common/constants.dart';
+import 'package:ditonton/common/http_ssl_pinning.dart';
 import 'package:ditonton/common/utils.dart';
 import 'package:ditonton/injection.dart' as di;
 import 'package:ditonton/presentation/bloc/movie_watchlist_status/movie_watchlist_status_bloc.dart';
@@ -36,7 +37,9 @@ import 'presentation/bloc/now_playing_movies/now_playing_movies_bloc.dart';
 import 'presentation/bloc/search_movie/search_bloc.dart';
 import 'presentation/bloc/watchlist_movies/watchlist_movies_bloc.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await HttpSslPinning.init();
   di.init();
   runApp(MyApp());
 }

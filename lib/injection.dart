@@ -43,6 +43,7 @@ import 'package:ditonton/presentation/bloc/watchlist_tv/watchlist_tv_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
+import 'common/http_ssl_pinning.dart';
 import 'presentation/bloc/search_movie/search_bloc.dart';
 
 final locator = GetIt.instance;
@@ -178,6 +179,8 @@ void init() {
   locator.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(locator()));
 
   // external
-  locator.registerLazySingleton(() => http.Client());
   locator.registerLazySingleton(() => DataConnectionChecker());
+
+  // ssl pinning
+  locator.registerLazySingleton(() => HttpSslPinning.client);
 }
