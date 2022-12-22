@@ -27,10 +27,12 @@ import 'package:ditonton/presentation/pages/tv_detail_page.dart';
 import 'package:ditonton/presentation/pages/tv_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_tv_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'firebase_options.dart';
 import 'presentation/bloc/movie_detail/movie_detail_bloc.dart';
 import 'presentation/bloc/movie_recommendation/movie_recommendation_bloc.dart';
 import 'presentation/bloc/now_playing_movies/now_playing_movies_bloc.dart';
@@ -40,6 +42,9 @@ import 'presentation/bloc/watchlist_movies/watchlist_movies_bloc.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HttpSslPinning.init();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   di.init();
   runApp(MyApp());
 }
