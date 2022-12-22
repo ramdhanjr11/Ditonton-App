@@ -8,12 +8,8 @@ import 'package:ditonton/presentation/pages/popular_tv_page.dart';
 import 'package:ditonton/presentation/pages/search_tv_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_tv_page.dart';
 import 'package:ditonton/presentation/pages/tv_detail_page.dart';
-import 'package:ditonton/presentation/provider/tv_list_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
-
-import '../../common/state_enum.dart';
 import '../../domain/entities/tv.dart';
 
 class TvPage extends StatefulWidget {
@@ -30,10 +26,6 @@ class _TvPageState extends State<TvPage> {
   void initState() {
     super.initState();
     Future.microtask(() {
-      Provider.of<TvListNotifier>(context, listen: false)
-        ..fetchPopularTv()
-        ..fetchTvTopRated()
-        ..fetchTvAiringToday();
       BlocProvider.of<PopularTvBloc>(context).add(FetchPopularTv());
       BlocProvider.of<TopRatedTvBloc>(context).add(FetchTopRatedTv());
       BlocProvider.of<TvAiringTodayBloc>(context).add(FetchTvAiringToday());
