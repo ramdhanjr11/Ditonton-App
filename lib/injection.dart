@@ -38,6 +38,7 @@ import 'package:ditonton/presentation/bloc/tv_detail/tv_detail_bloc.dart';
 import 'package:ditonton/presentation/bloc/tv_recommendation/tv_recommendation_bloc.dart';
 import 'package:ditonton/presentation/bloc/tv_watchlist_status/tv_watchlist_status_bloc.dart';
 import 'package:ditonton/presentation/bloc/watchlist_movies/watchlist_movies_bloc.dart';
+import 'package:ditonton/presentation/bloc/watchlist_tv/watchlist_tv_bloc.dart';
 import 'package:ditonton/presentation/provider/airing_today_tv_notifier.dart';
 import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
 import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
@@ -210,6 +211,11 @@ void init() {
     () => TvWatchlistStatusBloc(
       locator(),
       locator(),
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => WatchlistTvBloc(
       locator(),
     ),
   );
