@@ -7,6 +7,9 @@ import 'package:ditonton/presentation/bloc/popular_tv/popular_tv_bloc.dart';
 import 'package:ditonton/presentation/bloc/top_rated_movies/top_rated_movies_bloc.dart';
 import 'package:ditonton/presentation/bloc/top_rated_tv/top_rated_tv_bloc.dart';
 import 'package:ditonton/presentation/bloc/tv_airing_today/tv_airing_today_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv_detail/tv_detail_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv_recommendation/tv_recommendation_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv_watchlist_status/tv_watchlist_status_bloc.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/airing_today_tv_page.dart';
 import 'package:ditonton/presentation/pages/home_movie_page.dart';
@@ -92,6 +95,15 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => di.locator<TvAiringTodayBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => di.locator<TvDetailBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => di.locator<TvRecommendationBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => di.locator<TvWatchlistStatusBloc>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TopRatedMoviesNotifier>(),
