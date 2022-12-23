@@ -38,12 +38,12 @@ void main() {
     popularMoviesBloc = PopularMoviesBloc(mockGetPopularMovies);
   });
 
-  test('initial state should be empty', () {
+  test('initiate state should be empty', () {
     expect(popularMoviesBloc.state, PopularMoviesEmpty());
   });
 
   blocTest<PopularMoviesBloc, PopularMoviesState>(
-    'should emits [Loading, HasData] when data is gotten successfully.',
+    'should emits [Loading, Success] when data is gotten successfully.',
     build: () {
       when(mockGetPopularMovies.execute())
           .thenAnswer((_) async => Right(tMovieList));
@@ -55,15 +55,15 @@ void main() {
       PopularMoviesHasData(tMovieList),
     ],
     verify: (bloc) {
-      when(mockGetPopularMovies.execute());
+      verify(mockGetPopularMovies.execute());
     },
   );
 
   blocTest<PopularMoviesBloc, PopularMoviesState>(
-    'should emits [Loading, Error] when getting data is an error',
+    'should emits [Loading, Error] when getting data is an error.',
     build: () {
-      when(mockGetPopularMovies.execute())
-          .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+      when(mockGetPopularMovies.execute()).thenAnswer(
+          (realInvocation) async => Left(ServerFailure('Server Failure')));
       return popularMoviesBloc;
     },
     act: (bloc) => bloc.add(FetchPopularMovies()),
@@ -71,5 +71,8 @@ void main() {
       PopularMoviesLoading(),
       PopularMoviesError('Server Failure'),
     ],
+    verify: (bloc) {
+      verify(mockGetPopularMovies.execute());
+    },
   );
 }
